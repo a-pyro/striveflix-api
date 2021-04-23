@@ -112,7 +112,25 @@ export const deleteMedia = async (req, res, next) => {
 //@ route POST /media/:imdbID/upload
 export const uploadMediaImage = async (req, res, next) => {
   try {
-    res.send('hi');
+    const medias = await fetchMedias();
+    console.log(req.file);
+    const newMedias = medias.reduce((acc, cv) => {
+      if (cv.imdbID === req.params.imdbID) {
+        cv = { ...cv, Poster: req.file.path, editedAt: new Date() };
+        acc.push(cv);
+        return acc;
+      }
+      acc.push(cv);
+      return acc;
+    }, []);
+    await writeMedias(newMedias);
+    res
+      .status(200)
+      .send({
+        success: true,
+        Poster: req.file.path,
+        imdbdID: req.params.imdbID,
+      });
   } catch (error) {
     next(error);
   }

@@ -2,13 +2,13 @@ import multer from 'multer';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import { v2 as cloudinaryV4 } from 'cloudinary';
 import { extname } from 'path';
-import ErrorResponse from '../../utils/errorResponse.js';
+import ErrorResponse from '../../utils/errors/errorResponse.js';
 
 const multerUploadCloudinary = () => {
   const cloudinaryStorage = new CloudinaryStorage({
     cloudinary: cloudinaryV4,
     params: {
-      folder: 'strivezon',
+      folder: 'striveflix',
     },
   });
 
@@ -16,7 +16,7 @@ const multerUploadCloudinary = () => {
     storage: cloudinaryStorage,
     fileFilter: function (req, file, next) {
       const acceptedExt = ['.png', '.jpg', '.gif', '.bmp', '.jpeg'];
-      console.log(file);
+      // console.log(file);
       if (!acceptedExt.includes(extname(file.originalname))) {
         return next(
           new ErrorResponse(
@@ -29,7 +29,7 @@ const multerUploadCloudinary = () => {
       next(null, true);
     },
   });
-  return upload.single('productPic');
+  return upload.single('mediaPic');
 };
 
 export default multerUploadCloudinary;

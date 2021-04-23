@@ -7,8 +7,10 @@ import {
   getAllMedia,
   uploadMediaImage,
 } from '../controllers/media.js';
+import multerUploadCloudinary from '../middlewares/media/pictureUpload.js';
 import { validateMedia } from '../middlewares/validation/mediaValidation.js';
 
+const upload = multerUploadCloudinary();
 const router = Router();
 
 router.route('/').get(getAllMedia).post(addMedia);
@@ -18,6 +20,6 @@ router
   .delete(deleteMedia)
   .put(validateMedia, modifyMedia);
 
-router.route('/:imdbID/upload').post(uploadMediaImage);
+router.route('/:imdbID/upload').post(upload, uploadMediaImage);
 
 export default router;
