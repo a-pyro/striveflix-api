@@ -31,16 +31,6 @@ export const addReview = async (req, res, next) => {
   }
 };
 
-// @desc    get single Comment
-// @route   GET /comments/:imdbid/:id=> comment id
-export const getSingleReview = async (req, res, next) => {
-  try {
-    res.send('hi');
-  } catch (error) {
-    next(error);
-  }
-};
-
 // @route   PUT /comments//:imdbid/:id
 export const modifyReview = async (req, res, next) => {
   try {
@@ -50,10 +40,24 @@ export const modifyReview = async (req, res, next) => {
   }
 };
 
-// @route   DELETE /comment/:imdbid/:id => comment id
+// @route   DELETE /comment/:imdbID/:id => comment id
 export const deleteReview = async (req, res, next) => {
   try {
-    res.send('hi');
+    const reviews = await fetchReviews();
+    const newReviews = reviews.reduce((acc, cv) => {
+      if (cv.elementId === req.params.imdbID && cv._id === req.params.id) {
+        return acc;
+      }
+      acc.push(cv);
+      return acc;
+    }, []);
+    await writeReviews(newReviews);
+    res.status(200).send({
+      success: true,
+      moviesReviews: `${req.protocol}://${req.get('host')}/reviews/${
+        req.body.elementId
+      }`,
+    });
   } catch (error) {
     next(error);
   }
