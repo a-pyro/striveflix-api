@@ -1,19 +1,23 @@
 import { check, checkSchema, validationResult } from 'express-validator';
-import ErrorResponse from '../../utils/errorResponse.js';
+import ErrorResponse from '../../utils/errors/errorResponse.js';
 import multer from 'multer';
 import { extname } from 'path';
+import { fetchMedias } from '../../utils/fs/fsUtils.js';
 
-export const validateProduct = [
-  check('name').trim().notEmpty().withMessage('name cannot be empty'),
-  check('description')
-    .trim()
-    .notEmpty()
-    .withMessage('description cannot be empty'),
-  check('brand').trim().notEmpty().withMessage('brand cannot be empty'),
-  check('price').notEmpty().withMessage('price cannot be empty'),
-  check('category').trim().notEmpty().withMessage('category cannot be empty'),
-  (req, res, next) => {
+export const validateMedia = [
+  check('Title').trim().notEmpty().withMessage('title cannot be empty'),
+  check('Year').trim().notEmpty().withMessage('year cannot be empty'),
+  check('Type').notEmpty().withMessage('type cannot be empty'),
+  check('imdbID').trim().notEmpty().withMessage('imdbID cannot be empty'),
+  async (req, res, next) => {
     const errors = validationResult(req);
+    //controllo che non mi dia un altro imdb id
+    const medias = await fetchMedias();
+    if (req.body.imdbID !== req.params.imdbID) {
+      return next(
+        new ErrorResponse(`Imdb id must be unique and cannot be changed`, 400)
+      );
+    }
     if (!errors.isEmpty()) {
       const error = new ErrorResponse(
         `Something went wrong with validation`,

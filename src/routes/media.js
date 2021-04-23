@@ -7,6 +7,7 @@ import {
   getAllMedia,
   uploadMediaImage,
 } from '../controllers/media.js';
+import { validateMedia } from '../middlewares/validation/mediaValidation.js';
 
 const router = Router();
 
@@ -15,7 +16,7 @@ router
   .route('/:imdbID')
   .get(getSingleMedia)
   .delete(deleteMedia)
-  .put(modifyMedia);
+  .put(validateMedia, modifyMedia);
 
 router.route('/:imdbID/upload').post(uploadMediaImage);
 

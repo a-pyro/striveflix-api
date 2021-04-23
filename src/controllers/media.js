@@ -42,7 +42,7 @@ export const addMedia = async (req, res, next) => {
     }
     // se nella richiesta c'è tutto, lo aggiungo in db
     const medias = await fetchMedias();
-    const newMedia = { ...req.body };
+    const newMedia = { ...req.body, createdAt: new Date() };
     medias.push(newMedia);
     await writeMedias(medias);
 
@@ -70,7 +70,28 @@ export const getSingleMedia = async (req, res, next) => {
 // @route   PUT /media/:imdbID
 export const modifyMedia = async (req, res, next) => {
   try {
-    res.send('hi');
+    try {
+      const medias = await fetchMedias();
+      const movie = medias.find((mov) => mov.imdbID === req.params.imdbID);
+      if (!movie) {
+        return next(new ErrorResponse(`Movie not found`, 404));
+      }
+      const modifiedMovie = { ...req.body };
+      const newMedias = medias.reduce((acc, cv) => {
+        if (cv.imdbID === modifiedMovie.imdbID) {
+          cv = { ...cv, ...modifiedMovie, editedAt: new Date() };
+          acc.push(cv);
+          return acc;
+        }
+        acc.push(cv);
+        return acc;
+      }, []);
+      await writeMedias(newMedias);
+
+      return res.status(200).send({ succes: true, modifiedMovie });
+    } catch (error) {
+      next(error);
+    }
   } catch (error) {
     next(error);
   }
