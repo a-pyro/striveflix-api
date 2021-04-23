@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import ErrorResponse from '../utils/errors/errorResponse.js';
-import { fetchAttendees, writeAttendees } from '../utils/fs/fsUtils.js';
+
 import { sendEmail } from '../utils/email/email.js';
 
 // @desc    get all Comments for a media

@@ -11,8 +11,14 @@ const productsFiles = join(
   '../../public/img/products'
 );
 
-export const fetchAttendees = async () =>
-  await readJSON(join(allData, 'attendees.json'));
+export const fetchMedias = async () =>
+  await readJSON(join(allData, 'media.json'));
 
-export const writeAttendees = async (content) =>
-  await writeJSON(join(allData, 'attendees.json'), content);
+export const writeMedias = async (content) =>
+  await writeJSON(join(allData, 'media.json'), content);
+
+export const fetchReviews = async () =>
+  await readJSON(join(allData, 'review.json'));
+
+export const writeReviews = async (content) =>
+  await writeJSON(join(allData, 'review.json'), content);
