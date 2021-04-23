@@ -4,19 +4,15 @@ import {
   addReview,
   modifyReview,
   deleteReview,
-  getAllReviews,
+  getAllMovieReviews,
 } from '../controllers/reviews.js';
 
 const router = Router();
 
 router.route('/').post(addReview);
 
-router.route('/:imdbid').get(getAllReviews);
+router.route('/:imdbID').get(getAllMovieReviews);
 
-router
-  .route('/:imdbid/:id')
-  .get(getSingleReview)
-  .put(modifyReview)
-  .delete(deleteReview);
+router.route('/:imdbID/:id').put(modifyReview).delete(deleteReview);
 
 export default router;

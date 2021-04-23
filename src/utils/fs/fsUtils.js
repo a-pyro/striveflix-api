@@ -18,7 +18,7 @@ export const writeMedias = async (content) =>
   await writeJSON(join(allData, 'media.json'), content);
 
 export const fetchReviews = async () =>
-  await readJSON(join(allData, 'review.json'));
+  await readJSON(join(allData, 'reviews.json'));
 
 export const writeReviews = async (content) =>
-  await writeJSON(join(allData, 'review.json'), content);
+  await writeJSON(join(allData, 'reviews.json'), content);

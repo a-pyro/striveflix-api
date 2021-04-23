@@ -2,12 +2,12 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorResponse from '../utils/errors/errorResponse.js';
 
 import { sendEmail } from '../utils/email/email.js';
+import { fetchReviews, writeReviews } from '../utils/fs/fsUtils.js';
 
 // @desc    get all Comments for a media
 // @route   GET /comments/:imdbid
-export const getAllReviews = async (req, res, next) => {
+export const getAllMovieReviews = async (req, res, next) => {
   try {
-    res.send('hi');
   } catch (error) {
     next(error);
   }
@@ -16,7 +16,16 @@ export const getAllReviews = async (req, res, next) => {
 // @route   POST /comments
 export const addReview = async (req, res, next) => {
   try {
-    res.send('hi');
+    const reviews = await fetchReviews();
+    const newReview = { ...req.body, createdAt: new Date(), _id: uuidv4() };
+    reviews.push(newReview);
+    await writeReviews(reviews);
+    res.status(201).send({
+      success: true,
+      moviesReviews: `${req.protocol}://${req.get('host')}/reviews/${
+        req.body.elementId
+      }`,
+    });
   } catch (error) {
     next(error);
   }

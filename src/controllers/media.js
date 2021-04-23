@@ -124,13 +124,11 @@ export const uploadMediaImage = async (req, res, next) => {
       return acc;
     }, []);
     await writeMedias(newMedias);
-    res
-      .status(200)
-      .send({
-        success: true,
-        Poster: req.file.path,
-        imdbdID: req.params.imdbID,
-      });
+    res.status(200).send({
+      success: true,
+      Poster: req.file.path,
+      imdbdID: req.params.imdbID,
+    });
   } catch (error) {
     next(error);
   }
