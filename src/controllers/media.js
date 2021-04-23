@@ -56,7 +56,12 @@ export const addMedia = async (req, res, next) => {
 // @route   GET /media/:imdbID
 export const getSingleMedia = async (req, res, next) => {
   try {
-    res.send('hi');
+    const medias = await fetchMedias();
+    const movie = medias.find((mov) => mov.imdbID === req.params.imdbID);
+    if (!movie) {
+      return next(new ErrorResponse(`Movie not found`, 404));
+    }
+    return res.status(200).send({ succes: true, movie });
   } catch (error) {
     next(error);
   }
