@@ -5,9 +5,23 @@ import { sendEmail } from '../utils/email/email.js';
 import { fetchReviews, writeReviews } from '../utils/fs/fsUtils.js';
 
 // @desc    get all Comments for a media
-// @route   GET /comments/:imdbid
+// @route   GET /comments/:imdbID
 export const getAllMovieReviews = async (req, res, next) => {
   try {
+    const reviews = await fetchReviews();
+    const movieReviews = reviews.filter(
+      (rev) => rev.elementId === req.params.imdbID
+    );
+    if (movieReviews.length === 0) {
+      return res
+        .status(200)
+        .send({
+          success: true,
+          message: 'no reviews for this movie',
+          movieReviews,
+        });
+    }
+    res.status(200).send({ success: true, movieReviews });
   } catch (error) {
     next(error);
   }
