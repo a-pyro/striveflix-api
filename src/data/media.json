@@ -1,12 +1,5 @@
 [
   {
-    "Title": "The Lord of the Rings: The Fellowship of the Ring",
-    "Year": "2001",
-    "imdbID": "tt0120737",
-    "Type": "movie",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300.jpg"
-  },
-  {
     "Title": "The Lord of the Rings: The Return of the King",
     "Year": "2003",
     "imdbID": "tt0167260",
@@ -96,5 +89,19 @@
     "imdbID": "tt4154796",
     "Type": "movie",
     "Poster": "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg"
+  },
+  {
+    "Title": "Batman Begins",
+    "Year": "2005",
+    "imdbID": "tt0372784",
+    "Type": "movie",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
+  },
+  {
+    "Title": "Joker",
+    "Year": "2019",
+    "imdbID": "tt7286456",
+    "Type": "movie",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg"
   }
 ]

@@ -12,11 +12,11 @@ const router = Router();
 
 router.route('/').get(getAllMedia).post(addMedia);
 router
-  .route('/:imdbid')
+  .route('/:imdbID')
   .get(getSingleMedia)
   .delete(deleteMedia)
   .put(modifyMedia);
 
-router.route('/:imdbid/upload').post(uploadMediaImage);
+router.route('/:imdbID/upload').post(uploadMediaImage);
 
 export default router;
