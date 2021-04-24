@@ -22,6 +22,7 @@ export const getAllMedia = async (req, res, next) => {
 // @route   POST /media
 export const addMedia = async (req, res, next) => {
   try {
+    console.log(req.body);
     //se nella richiesta c'è solo title => gli mando array da cui scegliere
     if (Object.keys(req.body).length === 1) {
       const title = req.body.Title;
@@ -39,14 +40,15 @@ export const addMedia = async (req, res, next) => {
       } else {
         return res.status(200).send(movies.data.Search); //se trova gli mando l'array
       }
-    }
-    // se nella richiesta c'è tutto, lo aggiungo in db
-    const medias = await fetchMedias();
-    const newMedia = { ...req.body, createdAt: new Date() };
-    medias.push(newMedia);
-    await writeMedias(medias);
+    } else {
+      // se nella richiesta c'è tutto, lo aggiungo in db
+      const medias = await fetchMedias();
+      const newMedia = { ...req.body, createdAt: new Date() };
+      medias.push(newMedia);
+      await writeMedias(medias);
 
-    res.status(201).send({ success: true, imdbID: req.body.imdbID });
+      res.status(201).send({ success: true, imdbID: req.body.imdbID });
+    }
   } catch (error) {
     next(error);
   }

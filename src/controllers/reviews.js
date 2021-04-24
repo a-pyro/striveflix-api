@@ -13,13 +13,11 @@ export const getAllMovieReviews = async (req, res, next) => {
       (rev) => rev.elementId === req.params.imdbID
     );
     if (movieReviews.length === 0) {
-      return res
-        .status(200)
-        .send({
-          success: true,
-          message: 'no reviews for this movie',
-          movieReviews,
-        });
+      return res.status(200).send({
+        success: true,
+        message: 'no reviews for this movie',
+        movieReviews,
+      });
     }
     res.status(200).send({ success: true, movieReviews });
   } catch (error) {
