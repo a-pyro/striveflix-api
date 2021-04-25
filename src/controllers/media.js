@@ -59,12 +59,11 @@ export const addMedia = async (req, res, next) => {
 // @route   GET /media/:imdbID
 export const getSingleMedia = async (req, res, next) => {
   try {
-    const medias = await fetchMedias();
-    const movie = medias.find((mov) => mov.imdbID === req.params.imdbID);
-    if (!movie) {
-      return next(new ErrorResponse(`Movie not found`, 404));
-    }
-    return res.status(200).send({ succes: true, movie });
+    const resp = await axios.get(
+      `${process.env.OMDB_API}i=${req.params.imdbID}`
+    );
+    console.log(resp.data);
+    res.status(200).send(resp.data);
   } catch (error) {
     next(error);
   }
