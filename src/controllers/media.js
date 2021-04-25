@@ -1,13 +1,14 @@
-import { v4 as uuidv4 } from 'uuid';
 import ErrorResponse from '../utils/errors/errorResponse.js';
+import { pipeline } from 'stream';
 
-import { sendEmail } from '../utils/email/email.js';
-
-import generatePDF, { asyncPipeline } from '../utils/pdf/generatePDF.js';
+import fs from 'fs-extra';
 import { fetchMedias, writeMedias } from '../utils/fs/fsUtils.js';
-import { response } from 'express';
+
 import axios from 'axios';
 
+import { generatePdfCatalogue } from '../utils/pdf/pdf.js';
+import { asyncPipeline } from '../utils/pdf/generatePDF.js';
+const { createReadStream } = fs;
 // @desc    get all media
 
 // @route   GET /media
@@ -127,6 +128,34 @@ export const uploadMediaImage = async (req, res, next) => {
       Poster: req.file.path,
       imdbdID: req.params.imdbID,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getPDFcatalogue = async (req, res, next) => {
+  try {
+    const media = await fetchMedias();
+
+    if (!req.query.hasOwnProperty('title')) {
+      return next(
+        new ErrorResponse(
+          `Only title query is implemented, you sent ${req.url}`,
+          400
+        )
+      );
+    }
+    const title = req.query.title.toLowerCase();
+    const catalogue = media.filter((mov) =>
+      mov['Title'].toLowerCase().includes(title)
+    );
+    const sourceStream = await generatePdfCatalogue(catalogue);
+    res.attachment('catalogue.pdf');
+    // await asyncPipeline(sourceStream, res);
+    pipeline(sourceStream, res, () => {
+      console.log('end');
+    });
+    // res.status(200).send({ succes: true, data: 'suca' });
   } catch (error) {
     next(error);
   }
