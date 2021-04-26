@@ -16,26 +16,22 @@ const fetchImg = async (endpoint) => {
 const contentuto = async (catalogue) => {
   try {
     const content = catalogue.reduce(async (acc, cv) => {
-      try {
-        const title = { text: `${cv.Title}`, style: 'header' };
-        const elements = {
-          ul: [
-            `${'Year: ' + cv.Year}`,
-            `${'imdbID: ' + cv.imdbID}`,
-            `${'Type: ' + cv.Type}`,
-          ],
-        };
-        const url = await fetchImg(cv.Poster);
-        const image = { image: url };
+      const title = { text: `${cv.Title}`, style: 'header' };
+      const elements = {
+        ul: [
+          `${'Year: ' + cv.Year}`,
+          `${'imdbID: ' + cv.imdbID}`,
+          `${'Type: ' + cv.Type}`,
+        ],
+      };
+      const url = await fetchImg(cv.Poster);
+      const image = { image: url };
 
-        acc.push(title);
-        acc.push(elements);
-        acc.push(image);
+      acc.push(title);
+      acc.push(elements);
+      acc.push(image);
 
-        return acc;
-      } catch (error) {
-        console.log(37, error);
-      }
+      return acc;
     }, []);
     return content;
   } catch (error) {
