@@ -9,7 +9,7 @@ const fetchImg = async (endpoint) => {
     const result = Buffer.from(resp.data, 'base64');
     return result;
   } catch (error) {
-    console.log(error);
+    console.log('fetchImg: ', error);
   }
 };
 
@@ -35,7 +35,7 @@ const contentuto = async (catalogue) => {
     }, []);
     return content;
   } catch (error) {
-    console.log('QUI: ', error);
+    console.log('CONTENTUTO : ', error);
   }
 };
 
@@ -63,6 +63,6 @@ export const generatePdfCatalogue = async (catalogue) => {
 
     return sourceStream;
   } catch (error) {
-    console.log('QUI: ', error);
+    console.log('generatePDFcatalogue: ', error);
   }
 };
